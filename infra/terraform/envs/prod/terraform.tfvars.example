@@ -1,0 +1,6 @@
+project_id = "your-gcp-project-id"
+region     = "asia-northeast1"
+zone       = "asia-northeast1-b"
+
+bot_name     = "slack-codex-bot"
+machine_type = "e2-small"
