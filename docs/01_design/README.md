@@ -4,6 +4,7 @@
 
 ## Documents
 
+- [00 Slack Conversation Examples](00_slack_conversation_examples.md)
 - [00 Product Brief](00_product_brief.md)
 - [01 System Architecture](01_system_architecture.md)
 - [02 Slack Protocol](02_slack_protocol.md)
@@ -13,6 +14,17 @@
 - [06 MVP Plan](06_mvp_plan.md)
 - [07 Agents and Skills](07_agents_and_skills.md)
 - [99 Owner Procedures](99_owner_procedures.md)
+
+## Design Flow
+
+設計は次の順序で進める。
+
+1. Slack conversation examplesで、実現したい会話を具体的に書く。
+2. 具体例から、ユーザーが求めている要求を抽出する。
+3. 要求を、実装が満たすべき検証可能な要件へ抽象化する。
+4. 要件に沿って、Agent Runtime、Skill、Slack protocol、Codex executor、infraのアーキテクチャを決める。
+
+現時点では、具体例を先に追加し、既存のProduct BriefとSystem Architectureは後続でこの流れに合わせて再整理する。
 
 ## Design Principles
 
