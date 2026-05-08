@@ -19,12 +19,14 @@
 - Skill registryの最小実装
 - チャンネルmention受信
 - thread返信受信
+- mention gate
 - 3秒以内ACK
 - thread返信
 
 完了条件:
 
 - project channelでAgentをmentionしたらthreadに返信できる。
+- mentionなしの通常チャンネル投稿には返信もjob作成もしない。
 - project channelのthreadで追加指示を送ったら、threadに紐づいたAgentが同じthreadに返信できる。
 - Agent profileで有効化されたSkillだけが呼び出される。
 

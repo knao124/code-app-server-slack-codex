@@ -244,11 +244,27 @@ skills:
 
 ## Routing Rules
 
-Slack eventは次の順でAgentへroutingする。
+Slack eventはrouting前にactionabilityを判定する。
+
+処理対象になる条件:
+
+1. 明示mentionされたAgentがいる。
+2. 汎用Codex botがmentionされ、channel default Agentにroutingできる。
+3. 既存のAgent-owned threadへの返信である。
+4. slash commandで明示的にCodex/Agentを呼んでいる。
+5. scheduleや内部jobが生成したeventである。
+
+処理対象にならない条件:
+
+- mentionのない新規チャンネル投稿
+- channel default Agentが存在するだけの投稿
+- 許可チャンネル内の人間同士の会話
+
+actionabilityを満たしたeventは次の順でAgentへroutingする。
 
 1. 明示mentionされたAgent
 2. threadに紐づいた既存Agent
-3. channelのdefault Agent
+3. 汎用Codex bot mentionに対応するchannel default Agent
 4. operations channelのfallback Agent
 
 複数Agentが反応できる場合は、controllerが1つに絞る。複数Agentに同時応答させる場合は明示commandを必要にする。

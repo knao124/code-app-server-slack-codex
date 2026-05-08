@@ -77,6 +77,7 @@ MVPは次を満たせばよい。
 
 - Slackチャンネル上のmention、thread返信、slash commandを受け取れる。
 - Slack eventを3秒以内にACKし、処理は非同期ジョブ化する。
+- 新規チャンネルメッセージを処理対象にする条件として、Codex/Agentへの明示mentionを要求できる。
 - Agent profileを少なくとも1つ定義し、利用Skillと常駐チャンネルを設定できる。
 - Codex実行ジョブを作成し、結果をSlack threadへ返す。
 - 日報チャンネルへ毎日1回投稿できる。
