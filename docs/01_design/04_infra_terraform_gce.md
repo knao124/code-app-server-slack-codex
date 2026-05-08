@@ -11,7 +11,7 @@
 MVPでTerraform管理するresource:
 
 - GCE instance
-- service account for bot runtime
+- service account for agent runtime
 - IAM bindings
 - Secret Manager secrets
 - persistent disk for bot state
@@ -142,14 +142,14 @@ bootstrap手順は別途必要。
 ```text
 1. TerraformでGCE/SA/Secrets/Diskを作る
 2. Slack/GitHub/OpenAI系secret valueを投入する
-3. VMへbot runtimeをdeployする
+3. VMへagent runtimeをdeployする
 4. systemd serviceを起動する
 5. Slackチャンネルmentionとthread返信で疎通確認する
 ```
 
 ## Environment Variables
 
-Bot runtimeに渡す候補:
+Agent runtimeに渡す候補:
 
 ```text
 SLACK_BOT_TOKEN

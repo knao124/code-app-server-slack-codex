@@ -2,7 +2,7 @@
 
 ## Summary
 
-Slack Botを主役にし、Codexを裏側の実行エンジンとして扱う。
+Slack Agent Runtimeを主役にし、Codexを裏側の実行エンジンとして扱う。Runtimeは単一人格ではなく、複数Agent profileをSlackに常駐させる。
 
 ```text
 Slack workspace
@@ -15,7 +15,10 @@ Job queue
   |  async processing
   v
 Agent controller
-  |  policy, memory, routing, schedules
+  |  agent routing, policy, memory, schedules
+  v
+Agent runtime
+  |  agent profile + skill registry
   v
 Codex executor adapter
   |  codex sdk / app-server / cli
@@ -58,16 +61,50 @@ MVP候補:
 
 ### Agent Controller
 
-Botの人格・運用ルール・権限・ルーティングを持つ。
+Slack eventをどのAgentへ渡すかを決める。人格や職能そのものはAgent profileに寄せ、controllerはrouting、policy、state管理を担う。
 
 責務:
 
 - Slack eventを内部commandへ変換する。
-- 誰からの依頼か、どのチャンネルか、どのプロジェクトかを判定する。
+- 誰からの依頼か、どのチャンネルか、どのプロジェクトか、どのAgent宛てかを判定する。
 - Codex実行が必要か、普通の会話応答で済むかを判定する。
 - 作業進捗、日報、相談をSlackへ投稿する。
 - 承認が必要な操作を止め、ユーザーへ確認する。
-- 会話状態、ジョブ状態、Slack thread mappingを保存する。
+- Agent状態、会話状態、ジョブ状態、Slack thread mappingを保存する。
+
+### Agent Runtime
+
+常駐Agentを実行する。
+
+Agent profileは次を持つ。
+
+- agent id
+- display name
+- home channels
+- enabled skills
+- permissions
+- schedule
+- memory scope
+- Codex executor policy
+
+MVPでは1つのAgent profileから始めるが、設計上は複数Agentを同じruntimeで動かせるようにする。
+
+### Skill Registry
+
+SkillはAgentから呼び出される機能単位。
+
+初期Skill:
+
+- conversation
+- task execution
+- progress reporting
+- daily report
+- decision facilitation
+- project awareness
+- GitHub awareness
+- approval and audit
+
+SkillはSlack投稿やCodex実行に直接密結合しない。Agent RuntimeがSkill呼び出しを調停し、Slack EgressやCodex Executor Adapterへ渡す。
 
 ### Codex Executor Adapter
 
@@ -76,7 +113,7 @@ Codex実行部分を差し替え可能にする。
 候補:
 
 1. Codex SDK
-   - Botサーバーからプログラム的にCodexを扱う本命候補。
+   - Agent Runtimeからプログラム的にCodexを扱う本命候補。
    - 長期的には最も自然。
 2. `codex exec`
    - MVPで使いやすい。
@@ -94,6 +131,9 @@ MVPではSQLiteを使う。
 保存対象:
 
 - Slack user/channel/thread mapping
+- agent profiles
+- agent-channel bindings
+- skill invocation history
 - job status
 - Codex task metadata
 - daily report items
@@ -125,6 +165,8 @@ systemd
   +-- slack-codex-bot.service
         |
         +-- Slack Socket Mode client
+        +-- agent runtime
+        +-- skill registry
         +-- async worker
         +-- scheduler
         +-- Codex executor subprocess/client
@@ -140,6 +182,8 @@ systemd
 ├── app/
 │   ├── slack_ingress/
 │   ├── agent_controller/
+│   ├── agent_runtime/
+│   ├── skill_registry/
 │   ├── codex_executor/
 │   ├── storage/
 │   └── scheduler/

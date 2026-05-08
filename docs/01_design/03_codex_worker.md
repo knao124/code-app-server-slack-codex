@@ -2,9 +2,11 @@
 
 ## Role
 
-Codex Workerは、Slackから来た依頼を実際の調査・設計・実装・レビュー作業へ変換する。
+Codex Workerは、Skillから来た作業依頼を実際の調査・設計・実装・レビュー作業へ変換する。
 
-Slack Botは人間とのプロトコルを担い、Codex Workerは作業実行を担う。
+Agent Runtimeは人間とのSlackプロトコルとSkill呼び出しを担い、Codex Workerは作業実行を担う。
+
+Worker自体は中間管理職や作業者の人格を持たない。Agent profileとSkillが「誰として、何をするか」を決め、Workerは実行境界を担当する。
 
 ## Execution Modes
 
@@ -56,7 +58,7 @@ adapter実装候補:
 
 `codex app-server` は、Codex thread/turnを外部プロセスから扱える点でこの用途と相性がよい。
 
-ただし現時点ではexperimental扱いのため、設計上はadapterの1つに留める。Slack Bot全体をApp Server固有protocolへ強く結合しない。
+ただし現時点ではexperimental扱いのため、設計上はadapterの1つに留める。Agent Runtime全体をApp Server固有protocolへ強く結合しない。
 
 ## Workspace Management
 
