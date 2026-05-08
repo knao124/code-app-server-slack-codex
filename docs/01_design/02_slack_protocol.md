@@ -7,29 +7,37 @@ Codex botは「ツール」ではなくSlack上の常駐メンバーとして振
 そのため、Botの発話は次のSlack作法に従う。
 
 - 作業依頼にはthreadで返す。
-- 判断が必要な相談はDMする。
-- プロジェクト全体に関係する相談はproject channelに出す。
+- 判断が必要な相談もチャンネルのthreadで行う。
+- 個人宛ての確認が必要な場合も、該当チャンネルまたは運用チャンネルでownerをmentionする。
 - 日報は人間と同じ日報チャンネルに投稿する。
 - 長い実行ログを垂れ流さず、要約、差分、次アクションを中心に投稿する。
 
 ## Event Sources
 
-### DM
-
-用途:
-
-- ユーザーからの個別相談
-- 機密度が高い依頼
-- Botからユーザーへの判断依頼
-- 承認待ち通知
-
-### App Mention
+### Project Channel Mention
 
 用途:
 
 - プロジェクトチャンネルでの作業依頼
-- スレッド内でのレビュー・相談
+- プロジェクトチャンネルでの設計相談
 - 他メンバーとの会話にBotを参加させる
+
+### Thread Reply
+
+用途:
+
+- 既存依頼への追加指示
+- Codexからの進捗報告への返答
+- 判断待ちへの回答
+
+### Operations Channel
+
+用途:
+
+- 複数プロジェクトにまたがる運用相談
+- 承認待ち通知
+- 権限不足や実行環境の異常報告
+- ownerだけでなく関係者が見える形での意思決定
 
 ### Project Channel Watch
 
@@ -51,7 +59,7 @@ MVPでは明示的にinviteされたチャンネルのみ読む。
 - `/codex pause`
 - `/codex resume`
 
-MVPでは必須ではない。DM/mentionだけでも開始できる。
+MVPでは必須ではない。チャンネルmentionとthread返信だけでも開始できる。
 
 ## Message Categories
 
@@ -90,8 +98,9 @@ Botが自律判断できない場合の相談。
 
 投稿先:
 
-- 個人判断ならowner DM
-- プロジェクト判断ならproject channel thread
+- 依頼元が明確なら、元のproject channel thread
+- 横断的な運用判断なら、operations channel thread
+- owner判断が必要なら、上記thread内でownerをmention
 
 必要要素:
 
@@ -161,8 +170,6 @@ MVP候補:
 - `chat:write`
 - `channels:history`
 - `groups:history`
-- `im:history`
-- `im:write`
 - `users:read`
 - `commands` if slash commands are enabled
 - `connections:write` if Socket Mode is used

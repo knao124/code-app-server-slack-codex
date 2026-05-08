@@ -6,7 +6,7 @@ Slack Botを主役にし、Codexを裏側の実行エンジンとして扱う。
 
 ```text
 Slack workspace
-  |  DM / mention / channel event / slash command
+  |  channel mention / thread reply / slash command / scheduled event
   v
 Slack ingress
   |  ACK immediately
@@ -34,9 +34,9 @@ Slack egress
 
 Slackからの入力を受け取る。
 
-- DM
 - app mention
 - project channel message
+- thread reply
 - slash command
 - interactive button/modal
 - schedule trigger

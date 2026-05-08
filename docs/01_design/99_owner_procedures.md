@@ -2,25 +2,21 @@
 
 このプロジェクトでオーナーに依頼する手続きの一覧。
 
+## Completed
+
+### GitHub Repository
+
+public repoは作成済み。
+
+```text
+https://github.com/knao124/code-app-server-slack-codex
+```
+
 ## Now
 
-### GitHub Authentication
+### Terraform CLI
 
-この環境の `gh` CLI は未ログイン。
-
-必要な操作:
-
-```sh
-gh auth login
-```
-
-その後、次を実行してpublic repoを作る。
-
-```sh
-gh repo create knao124/code-app-server-slack-codex --public --source /Users/na-kobayashi/dev/knao124/code-app-server-slack-codex --remote origin --push
-```
-
-代替として、GitHub上でpublic repoを作成してから、こちらでremote設定とpushを行う。
+ローカル環境には `terraform` CLIが未導入。Terraform実装・検証前に導入する。
 
 ## Before Terraform Apply
 
@@ -63,6 +59,7 @@ CIでTerraformを回す場合はWorkload Identity Federationを検討する。
 - Bot display name
 - 日報投稿先channel
 - project channel allowlist
+- operations channel
 - owner Slack user ID
 
 必要token:
@@ -79,8 +76,6 @@ MVP候補:
 - `chat:write`
 - `channels:history`
 - `groups:history`
-- `im:history`
-- `im:write`
 - `users:read`
 - `connections:write`
 

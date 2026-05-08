@@ -69,7 +69,7 @@ Botがinviteされていないチャンネルは読まない。
 
 ## Approval UX
 
-Slack DMで承認依頼を出す。
+Slackの依頼元threadまたはoperations channel threadで承認依頼を出す。チャンネル外の個別通知は使わない。
 
 含める情報:
 

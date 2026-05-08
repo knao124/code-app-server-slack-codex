@@ -144,7 +144,7 @@ bootstrap手順は別途必要。
 2. Slack/GitHub/OpenAI系secret valueを投入する
 3. VMへbot runtimeをdeployする
 4. systemd serviceを起動する
-5. Slack DM/mentionで疎通確認する
+5. Slackチャンネルmentionとthread返信で疎通確認する
 ```
 
 ## Environment Variables
